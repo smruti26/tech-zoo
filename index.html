@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TechZoo 🦄 — Learn Tech the Fun Way!</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fef9f0;
+    --yellow: #ffd93d;
+    --orange: #ff6b35;
+    --green: #6bcb77;
+    --blue: #4d96ff;
+    --purple: #c77dff;
+    --pink: #ff6b9d;
+    --red: #ff4757;
+    --dark: #2d2d2d;
+    --card: #ffffff;
+    --shadow: 0 8px 32px rgba(0,0,0,0.10);
+    --radius: 24px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--dark);
+    overflow-x: hidden;
+    cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><text y='26' font-size='26'>🐾</text></svg>") 16 16, auto;
+  }
+
+  /* ---- HEADER ---- */
+  header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f64f59 100%);
+    padding: 0 2rem;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  }
+  .nav-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+  .logo {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.8rem; color: #fff;
+    letter-spacing: 1px;
+    display: flex; align-items: center; gap: 8px;
+    text-decoration: none;
+  }
+  .logo span { animation: bounce 1.5s infinite alternate; display: inline-block; }
+  nav a {
+    color: rgba(255,255,255,0.9); text-decoration: none;
+    font-weight: 700; font-size: 0.95rem;
+    margin-left: 1.5rem;
+    transition: color 0.2s;
+  }
+  nav a:hover { color: var(--yellow); }
+
+  /* ---- HERO ---- */
+  .hero {
+    background: linear-gradient(160deg, #ffecd2 0%, #fcb69f 50%, #ff9a9e 100%);
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='3' fill='%23ffffff30'/%3E%3C/svg%3E") repeat;
+  }
+  .hero-emoji-row {
+    font-size: 3rem; margin-bottom: 1.5rem;
+    display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;
+  }
+  .hero-emoji-row span {
+    display: inline-block;
+    animation: float 3s ease-in-out infinite;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+  }
+  .hero-emoji-row span:nth-child(2) { animation-delay: 0.4s; }
+  .hero-emoji-row span:nth-child(3) { animation-delay: 0.8s; }
+  .hero-emoji-row span:nth-child(4) { animation-delay: 1.2s; }
+  .hero-emoji-row span:nth-child(5) { animation-delay: 1.6s; }
+  .hero h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(2.5rem, 7vw, 5rem);
+    color: #fff;
+    text-shadow: 4px 4px 0px rgba(0,0,0,0.15);
+    line-height: 1.1;
+    position: relative;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--yellow);
+    text-shadow: 4px 4px 0px rgba(180,130,0,0.4);
+  }
+  .hero p {
+    font-size: 1.25rem; color: rgba(255,255,255,0.95);
+    max-width: 560px; margin: 1rem auto 2rem;
+    font-weight: 700; position: relative;
+  }
+  .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 28px; border-radius: 50px;
+    font-family: 'Fredoka One', cursive; font-size: 1.1rem;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  }
+  .btn:hover { transform: translateY(-3px) scale(1.04); box-shadow: 0 12px 30px rgba(0,0,0,0.25); }
+  .btn:active { transform: scale(0.97); }
+  .btn-primary { background: var(--dark); color: var(--yellow); }
+  .btn-secondary { background: #fff; color: var(--orange); }
+
+  /* ---- SECTION TITLE ---- */
+  .section { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem; }
+  .section-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2.2rem; text-align: center;
+    margin-bottom: 0.5rem;
+    color: var(--dark);
+  }
+  .section-sub {
+    text-align: center; font-size: 1.1rem; color: #777;
+    margin-bottom: 2.5rem; font-weight: 600;
+  }
+
+  /* ---- ANIMAL CARD GRID ---- */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 1.5rem;
+  }
+  .card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 2rem 1.5rem;
+    box-shadow: var(--shadow);
+    border: 3px solid transparent;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 6px;
+    border-radius: var(--radius) var(--radius) 0 0;
+  }
+  .card:hover { transform: translateY(-8px) rotate(-1deg); box-shadow: 0 20px 50px rgba(0,0,0,0.15); }
+  .card.frontend::before { background: linear-gradient(90deg, #ffd93d, #ff6b35); }
+  .card.backend::before { background: linear-gradient(90deg, #6bcb77, #4d96ff); }
+  .card.database::before { background: linear-gradient(90deg, #4d96ff, #c77dff); }
+  .card.api::before { background: linear-gradient(90deg, #c77dff, #ff6b9d); }
+  .card.devops::before { background: linear-gradient(90deg, #ff6b9d, #ff4757); }
+  .card.fullstack::before { background: linear-gradient(90deg, #ffd93d, #c77dff); }
+  .card:hover.frontend { border-color: #ffd93d; }
+  .card:hover.backend { border-color: #6bcb77; }
+  .card:hover.database { border-color: #4d96ff; }
+  .card:hover.api { border-color: #c77dff; }
+  .card:hover.devops { border-color: #ff4757; }
+  .card:hover.fullstack { border-color: var(--yellow); }
+
+  .card-animal { font-size: 3.5rem; margin-bottom: 0.75rem; display: block; }
+  .card h3 {
+    font-family: 'Fredoka One', cursive; font-size: 1.4rem; margin-bottom: 0.4rem;
+  }
+  .card .tagline {
+    font-size: 0.85rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1px; color: #aaa; margin-bottom: 0.75rem;
+  }
+  .card p { font-size: 0.95rem; color: #555; line-height: 1.55; margin-bottom: 1rem; }
+  .skill-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+  .pill {
+    font-size: 0.75rem; font-weight: 800;
+    padding: 4px 10px; border-radius: 30px;
+    background: #f0f0f0; color: #555;
+    transition: background 0.2s, color 0.2s;
+  }
+  .card:hover .pill { background: var(--dark); color: var(--yellow); }
+  .quote-bubble {
+    background: #f9f9f9; border-radius: 12px;
+    padding: 10px 14px; margin-top: 1rem;
+    font-size: 0.88rem; color: #444; font-weight: 700;
+    position: relative; border-left: 4px solid transparent;
+  }
+  .frontend .quote-bubble { border-color: #ffd93d; }
+  .backend .quote-bubble { border-color: #6bcb77; }
+  .database .quote-bubble { border-color: #4d96ff; }
+  .api .quote-bubble { border-color: #c77dff; }
+  .devops .quote-bubble { border-color: #ff4757; }
+  .fullstack .quote-bubble { border-color: var(--purple); }
+
+  /* ---- QUIZ ZONE ---- */
+  .quiz-zone {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+    padding: 4rem 2rem;
+    position: relative; overflow: hidden;
+  }
+  .quiz-zone::after {
+    content: '⭐✨🌟💫⚡';
+    position: absolute; top: 1rem; right: 2rem;
+    font-size: 1.5rem; letter-spacing: 8px;
+    animation: spin 4s linear infinite;
+    opacity: 0.3;
+  }
+  .quiz-inner { max-width: 700px; margin: 0 auto; text-align: center; }
+  .quiz-inner .section-title { color: #fff; }
+  .quiz-inner .section-sub { color: rgba(255,255,255,0.6); }
+  #question-box {
+    background: rgba(255,255,255,0.08);
+    border: 2px solid rgba(255,255,255,0.15);
+    border-radius: 20px; padding: 2rem;
+    margin-bottom: 1.5rem;
+    backdrop-filter: blur(10px);
+  }
+  #question-emoji { font-size: 3rem; display: block; margin-bottom: 1rem; }
+  #question-text {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.4rem; color: #fff;
+    line-height: 1.4;
+  }
+  .quiz-options {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px; margin-bottom: 1.5rem;
+  }
+  .quiz-option {
+    background: rgba(255,255,255,0.1);
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 14px; padding: 14px;
+    color: #fff; font-size: 0.95rem; font-weight: 700;
+    cursor: pointer; text-align: left;
+    transition: all 0.2s;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .quiz-option:hover { background: rgba(255,255,255,0.2); transform: scale(1.02); }
+  .quiz-option.correct { background: rgba(107,203,119,0.3); border-color: #6bcb77; }
+  .quiz-option.wrong { background: rgba(255,71,87,0.3); border-color: #ff4757; }
+  .quiz-option.disabled { pointer-events: none; opacity: 0.6; }
+  #quiz-feedback {
+    font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: #fff;
+    min-height: 2rem; margin-bottom: 1rem;
+    transition: all 0.3s;
+  }
+  .score-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,217,61,0.2); border: 2px solid var(--yellow);
+    border-radius: 50px; padding: 10px 20px; color: var(--yellow);
+    font-family: 'Fredoka One', cursive; font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ---- CONCEPT EXPLAINER ---- */
+  .explainer-section { background: #f0f7ff; }
+  .explainer-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .explainer-card {
+    background: #fff; border-radius: 20px;
+    padding: 1.75rem; box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+    border: 2px solid #e8f0ff;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .explainer-card:hover { transform: translateY(-5px); box-shadow: 0 12px 35px rgba(0,0,0,0.12); }
+  .explainer-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+  .explainer-card h3 {
+    font-family: 'Fredoka One', cursive; font-size: 1.25rem; margin-bottom: 0.5rem;
+    color: var(--dark);
+  }
+  .explainer-card p { font-size: 0.9rem; color: #666; line-height: 1.6; }
+  .analogy-box {
+    margin-top: 0.75rem; padding: 10px 14px;
+    border-radius: 12px; font-size: 0.85rem; font-weight: 700;
+    color: #fff;
+  }
+  .ec1 .analogy-box { background: linear-gradient(135deg, #f093fb, #f5576c); }
+  .ec2 .analogy-box { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+  .ec3 .analogy-box { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+  .ec4 .analogy-box { background: linear-gradient(135deg, #fa709a, #fee140); }
+  .ec5 .analogy-box { background: linear-gradient(135deg, #a18cd1, #fbc2eb); }
+  .ec6 .analogy-box { background: linear-gradient(135deg, #ffecd2, #fcb69f); color: #333; }
+
+  /* ---- TECH STACK BUILDER ---- */
+  .builder-section {
+    background: linear-gradient(135deg, #f8ffae, #43c6ac);
+    padding: 4rem 2rem;
+  }
+  .builder-inner { max-width: 800px; margin: 0 auto; }
+  .builder-section .section-title { color: var(--dark); }
+  .builder-section .section-sub { color: rgba(0,0,0,0.6); }
+  .stack-area {
+    display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+    margin: 1.5rem 0; min-height: 80px;
+    background: rgba(255,255,255,0.4); border-radius: 18px;
+    padding: 1rem; border: 3px dashed rgba(255,255,255,0.6);
+  }
+  .stack-area.drag-over { background: rgba(255,255,255,0.6); }
+  .tech-item {
+    display: flex; align-items: center; gap: 8px;
+    background: #fff; border-radius: 12px;
+    padding: 10px 16px; font-weight: 800; font-size: 0.9rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    cursor: grab; user-select: none;
+    transition: transform 0.15s, box-shadow 0.15s;
+    border: 2px solid transparent;
+  }
+  .tech-item:hover { transform: scale(1.05); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+  .tech-item:active { cursor: grabbing; transform: scale(0.97); }
+  .tech-shelf {
+    display: flex; gap: 0.75rem; flex-wrap: wrap;
+    justify-content: center; margin: 1rem 0;
+  }
+  .stack-label {
+    font-family: 'Fredoka One', cursive; font-size: 1rem;
+    color: rgba(0,0,0,0.5); text-align: center;
+    margin-bottom: 0.5rem;
+  }
+  #stack-name {
+    font-family: 'Fredoka One', cursive; font-size: 1.2rem;
+    color: var(--dark); margin-top: 1rem; text-align: center;
+    min-height: 2rem;
+  }
+  .reset-btn {
+    background: var(--dark); color: var(--yellow);
+    border: none; border-radius: 50px; padding: 10px 24px;
+    font-family: 'Fredoka One', cursive; font-size: 1rem;
+    cursor: pointer; display: block; margin: 1rem auto 0;
+    transition: transform 0.15s;
+  }
+  .reset-btn:hover { transform: scale(1.05); }
+
+  /* ---- CONFETTI ---- */
+  .confetti-piece {
+    position: fixed; width: 12px; height: 12px;
+    border-radius: 3px; pointer-events: none; z-index: 9999;
+    animation: confettiFall linear forwards;
+  }
+  @keyframes confettiFall {
+    0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* ---- FOOTER ---- */
+  footer {
+    background: var(--dark); color: rgba(255,255,255,0.7);
+    text-align: center; padding: 2rem;
+    font-size: 0.9rem; font-weight: 600;
+  }
+  footer span { color: var(--yellow); }
+
+  /* ---- ANIMATIONS ---- */
+  @keyframes float {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-14px); }
+  }
+  @keyframes bounce {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.15) rotate(5deg); }
+  }
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  @keyframes pop {
+    0% { transform: scale(0.5); opacity: 0; }
+    70% { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .pop-in { animation: pop 0.5s cubic-bezier(.34,1.56,.64,1) both; }
+
+  /* Scroll reveal */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s, transform 0.6s; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 600px) {
+    .quiz-options { grid-template-columns: 1fr; }
+    .hero-emoji-row { font-size: 2rem; }
+  }
+
+  /* ---- CONCEPT CARD CLICKABLE ---- */
+  .explainer-card { cursor: pointer; }
+  .explainer-card:hover { transform: translateY(-8px) scale(1.02); }
+  .click-hint {
+    font-size: 0.78rem; font-weight: 800; color: #bbb;
+    margin-top: 0.75rem; text-align: right; letter-spacing: 0.5px;
+  }
+
+  /* ---- MODAL OVERLAY ---- */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(20,10,40,0.75);
+    backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 1.5rem;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+  .modal-box {
+    background: #fff;
+    border-radius: 32px;
+    max-width: 640px; width: 100%;
+    max-height: 90vh; overflow-y: auto;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+    position: relative;
+    transform: scale(0.85) translateY(30px);
+    transition: transform 0.35s cubic-bezier(.34,1.56,.64,1);
+    scrollbar-width: thin;
+  }
+  .modal-overlay.open .modal-box {
+    transform: scale(1) translateY(0);
+  }
+
+  .modal-header {
+    border-radius: 32px 32px 0 0;
+    padding: 2rem 2rem 1.5rem;
+    position: relative;
+    text-align: center;
+  }
+  .modal-close {
+    position: absolute; top: 1rem; right: 1rem;
+    background: rgba(255,255,255,0.3); border: none;
+    width: 40px; height: 40px; border-radius: 50%;
+    font-size: 1.2rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s, transform 0.2s;
+    color: #fff; font-weight: 900;
+  }
+  .modal-close:hover { background: rgba(255,255,255,0.5); transform: rotate(90deg); }
+
+  .modal-big-emoji {
+    font-size: 4.5rem; display: block; margin-bottom: 0.5rem;
+    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.2));
+    animation: float 3s ease-in-out infinite;
+  }
+  .modal-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2rem; color: #fff;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.15);
+    margin: 0;
+  }
+  .modal-subtitle {
+    font-size: 0.9rem; color: rgba(255,255,255,0.85);
+    font-weight: 700; margin-top: 0.25rem;
+  }
+
+  .modal-body { padding: 1.75rem 2rem 2rem; }
+
+  .modal-illustration {
+    width: 100%; margin-bottom: 1.5rem;
+    border-radius: 20px; overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+
+  .modal-explain-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--dark);
+  }
+  .modal-explain-text {
+    font-size: 1rem; color: #555; line-height: 1.65;
+    margin-bottom: 1.25rem;
+  }
+
+  .modal-steps {
+    display: flex; flex-direction: column; gap: 10px;
+    margin-bottom: 1.25rem;
+  }
+  .modal-step {
+    display: flex; align-items: flex-start; gap: 12px;
+    background: #f8f9ff; border-radius: 14px; padding: 12px 14px;
+    border-left: 4px solid transparent;
+  }
+  .step-num {
+    width: 30px; height: 30px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fredoka One', cursive; font-size: 0.95rem;
+    color: #fff; flex-shrink: 0; margin-top: 1px;
+  }
+  .modal-step p { font-size: 0.9rem; color: #555; margin: 0; line-height: 1.5; }
+  .modal-step strong { color: var(--dark); }
+
+  .modal-fun-fact {
+    border-radius: 16px; padding: 14px 16px;
+    font-size: 0.9rem; font-weight: 700;
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .modal-fun-fact .fact-icon { font-size: 1.4rem; flex-shrink: 0; }
+
+  @media (max-width: 500px) {
+    .modal-box { border-radius: 24px; }
+    .modal-header { padding: 1.5rem 1.5rem 1rem; }
+    .modal-body { padding: 1.25rem 1.25rem 1.5rem; }
+    .modal-title { font-size: 1.6rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="nav-inner">
+    <a href="#" class="logo">🦁 <span>TechZoo</span></a>
+    <nav>
+      <a href="#characters">Characters</a>
+      <a href="#quiz">Quiz</a>
+      <a href="#concepts">Concepts</a>
+      <a href="#builder">Builder</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-emoji-row">
+    <span>🐶</span><span>🐢</span><span>🐟</span><span>🐦</span><span>🦆</span>
+  </div>
+  <h1>Tech is <em>WAY</em> more fun<br>with animals 🎉</h1>
+  <p>Meet the TechZoo crew — your adorable guides through the wild world of software development!</p>
+  <div class="hero-btns">
+    <a href="#characters" class="btn btn-primary">🐾 Meet the Crew</a>
+    <a href="#quiz" class="btn btn-secondary">🎯 Take the Quiz</a>
+  </div>
+</section>
+
+<!-- CHARACTER CARDS -->
+<section id="characters" class="section">
+  <p class="section-title reveal">🦎 Meet Your Tech Guides</p>
+  <p class="section-sub reveal">Every role, explained by an animal you'll never forget</p>
+
+  <div class="cards">
+
+    <div class="card frontend reveal" onclick="popCard(this)">
+      <span class="card-animal">🐶</span>
+      <div class="tagline">Frontend Developer</div>
+      <h3>Shiba, the Stylist</h3>
+      <p>Shiba is the face of every app — making sure everything <em>looks amazing</em> and feels buttery smooth. Buttons? Gorgeous. Animations? Chef's kiss.</p>
+      <div class="skill-pills">
+        <span class="pill">HTML</span>
+        <span class="pill">CSS</span>
+        <span class="pill">React</span>
+        <span class="pill">JavaScript</span>
+      </div>
+      <div class="quote-bubble">💬 "I only send requests... but they're <em>beautiful</em> requests."</div>
+    </div>
+
+    <div class="card backend reveal" onclick="popCard(this)">
+      <span class="card-animal">🐢</span>
+      <div class="tagline">Backend Developer</div>
+      <h3>Turbo, the Architect</h3>
+      <p>Don't let the shell fool you — Turbo handles ALL the heavy lifting. APIs, logic, auth, databases, deployment. He's slow to start but <em>unstoppable</em>.</p>
+      <div class="skill-pills">
+        <span class="pill">Node.js</span>
+        <span class="pill">Python</span>
+        <span class="pill">REST</span>
+        <span class="pill">Auth</span>
+      </div>
+      <div class="quote-bubble">💬 "Don't worry... I'll connect <em>everything</em>. 🗝️"</div>
+    </div>
+
+    <div class="card database reveal" onclick="popCard(this)">
+      <span class="card-animal">🐟</span>
+      <div class="tagline">Database</div>
+      <h3>Goldie, the Keeper</h3>
+      <p>Goldie lives in her bowl and guards your data fiercely. She's got a great memory (despite what you've heard). Need data? Just ask nicely.</p>
+      <div class="skill-pills">
+        <span class="pill">SQL</span>
+        <span class="pill">PostgreSQL</span>
+        <span class="pill">MongoDB</span>
+        <span class="pill">Redis</span>
+      </div>
+      <div class="quote-bubble">💬 "I only store data. But I store it <em>very well.</em>"</div>
+    </div>
+
+    <div class="card api reveal" onclick="popCard(this)">
+      <span class="card-animal">🐦</span>
+      <div class="tagline">API Gateway</div>
+      <h3>Router, the Dispatcher</h3>
+      <p>Router is the tiny bird with a big headset — every request that comes in gets sorted and sent to exactly the right place. Fast. Reliable. Never loses a packet.</p>
+      <div class="skill-pills">
+        <span class="pill">REST</span>
+        <span class="pill">GraphQL</span>
+        <span class="pill">gRPC</span>
+        <span class="pill">Rate Limit</span>
+      </div>
+      <div class="quote-bubble">💬 "I only route requests. ALL of them. Simultaneously."</div>
+    </div>
+
+    <div class="card devops reveal" onclick="popCard(this)">
+      <span class="card-animal">🦆</span>
+      <div class="tagline">DevOps Engineer</div>
+      <h3>Waddles, the Deployer</h3>
+      <p>Waddles has the CI/CD pipeline under control. Push your code — Waddles will test it, containerize it, and ship it to production before your coffee gets cold.</p>
+      <div class="skill-pills">
+        <span class="pill">Docker</span>
+        <span class="pill">Kubernetes</span>
+        <span class="pill">CI/CD</span>
+        <span class="pill">AWS</span>
+      </div>
+      <div class="quote-bubble">💬 "I'm just here to keep everything from... breaking. 🦺"</div>
+    </div>
+
+    <div class="card fullstack reveal" onclick="popCard(this)">
+      <span class="card-animal">🦁</span>
+      <div class="tagline">Full Stack Dev</div>
+      <h3>Leo, the Unicorn</h3>
+      <p>Leo does front, back, database, DevOps <em>and</em> makes the coffee. Legendary. Mythical. Slightly sleep-deprived. But still very much the hero of the team.</p>
+      <div class="skill-pills">
+        <span class="pill">Everything</span>
+        <span class="pill">Always</span>
+        <span class="pill">Forever</span>
+        <span class="pill">😅</span>
+      </div>
+      <div class="quote-bubble">💬 "Full stack? More like full snack — I eat bugs for breakfast."</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- QUIZ ZONE -->
+<section id="quiz" class="quiz-zone">
+  <div class="quiz-inner">
+    <p class="section-title" style="color:#fff">🎯 TechZoo Trivia</p>
+    <p class="section-sub">How well do you know your tech animals?</p>
+    <div class="score-badge">⭐ Score: <span id="score">0</span> / <span id="total">0</span></div>
+    <div id="question-box">
+      <span id="question-emoji">🤔</span>
+      <div id="question-text">Loading your question...</div>
+    </div>
+    <div class="quiz-options" id="options-container"></div>
+    <div id="quiz-feedback"></div>
+    <button class="btn btn-secondary" onclick="nextQuestion()" id="next-btn" style="display:none">Next Question ➡️</button>
+  </div>
+</section>
+
+<!-- CONCEPT EXPLAINER -->
+<section id="concepts" style="background:#f0f7ff; padding: 4rem 0;">
+  <div class="section" style="padding-top: 0; padding-bottom: 0;">
+    <p class="section-title reveal">🧠 Tech Concepts, Zoo Style</p>
+    <p class="section-sub reveal">Big ideas, tiny analogies</p>
+    <div class="explainer-grid">
+      <div class="explainer-card ec1 reveal" onclick="openModal('auth')">
+        <div class="explainer-icon">🔐</div>
+        <h3>Authentication</h3>
+        <p>Proving you are who you say you are. Like showing your ticket at the zoo gate before they let you in.</p>
+        <div class="analogy-box">🎟️ "Ticket checker at the zoo entrance"</div>
+        <div class="click-hint">👆 Click to explore!</div>
+      </div>
+      <div class="explainer-card ec2 reveal" onclick="openModal('api')">
+        <div class="explainer-icon">🌐</div>
+        <h3>APIs</h3>
+        <p>A menu of things one app can order from another. You don't need to know how the kitchen works — just what's on the menu.</p>
+        <div class="analogy-box">🍔 "A restaurant menu between apps"</div>
+        <div class="click-hint">👆 Click to explore!</div>
+      </div>
+      <div class="explainer-card ec3 reveal" onclick="openModal('cache')">
+        <div class="explainer-icon">🗄️</div>
+        <h3>Caching</h3>
+        <p>Remembering a recent answer so you don't have to ask again. Like keeping your zoo map in your pocket instead of getting a new one each time.</p>
+        <div class="analogy-box">🗺️ "Your pocket copy of the zoo map"</div>
+        <div class="click-hint">👆 Click to explore!</div>
+      </div>
+      <div class="explainer-card ec4 reveal" onclick="openModal('docker')">
+        <div class="explainer-icon">📦</div>
+        <h3>Containers (Docker)</h3>
+        <p>Packing your app with everything it needs so it works exactly the same anywhere. Like a terrarium you can carry anywhere for your turtle.</p>
+        <div class="analogy-box">🐢 "A portable habitat for your code"</div>
+        <div class="click-hint">👆 Click to explore!</div>
+      </div>
+      <div class="explainer-card ec5 reveal" onclick="openModal('lb')">
+        <div class="explainer-icon">⚖️</div>
+        <h3>Load Balancing</h3>
+        <p>Spreading work equally across multiple servers so no single one gets overwhelmed. Like multiple feeding stations at the zoo so no line gets too long.</p>
+        <div class="analogy-box">🦒 "Multiple feeding stations = no queue chaos"</div>
+        <div class="click-hint">👆 Click to explore!</div>
+      </div>
+      <div class="explainer-card ec6 reveal" onclick="openModal('cicd')">
+        <div class="explainer-icon">🔄</div>
+        <h3>CI/CD</h3>
+        <p>Automatically testing and deploying code changes. Like a conveyor belt that checks, packages, and delivers your code without human errors.</p>
+        <div class="analogy-box">🏭 "A robot assembly line for your software"</div>
+        <div class="click-hint">👆 Click to explore!</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH STACK BUILDER -->
+<section id="builder" class="builder-section">
+  <div class="builder-inner">
+    <p class="section-title reveal">🏗️ Build Your Dream Stack</p>
+    <p class="section-sub reveal">Drag your favorite technologies into the box below!</p>
+
+    <p class="stack-label">📦 Your Tech Stack:</p>
+    <div class="stack-area" id="stack-area" ondragover="onDragOver(event)" ondrop="onDrop(event)" ondragleave="onDragLeave(event)">
+      <span style="color:rgba(0,0,0,0.3);font-weight:700;font-size:0.9rem;align-self:center">Drag techs here! 👇</span>
+    </div>
+
+    <p class="stack-label" style="margin-top:1rem">🛠️ Available Technologies:</p>
+    <div class="tech-shelf" id="tech-shelf">
+      <div class="tech-item" draggable="true" ondragstart="onDragStart(event)" data-tech="React" style="border-color:#61dafb">⚛️ React</div>
+      <div class="tech-item" draggable="true" ondragstart="onDragStart(event)" data-tech="Node.js" style="border-color:#68a063">🟢 Node.js</div>
+      <div class="tech-item" draggable="true" ondragstart="onDragStart(event)" data-tech="PostgreSQL" style="border-color:#336791">🐘 PostgreSQL</div>
+      <div class="tech-item" draggable="true" ondragstart="onDragStart(event)" data-tech="MongoDB" style="border-color:#47a248">🍃 MongoDB</div>
+      <div class="tech-item" draggable="true" ondragstart="onDragStart(event)" data-tech="Docker" style="border-color:#2496ed">🐳 Docker</div>
+      <div class="tech-item" draggable="true" ondragstart="onDragStart(event)" data-tech="TypeScript" style="border-color:#3178c6">🔷 TypeScript</div>
+      <div class="tech-item" draggable="true" ondragstart="onDragStart(event)" data-tech="Python" style="border-color:#ffd43b">🐍 Python</div>
+      <div class="tech-item" draggable="true" ondragstart="onDragStart(event)" data-tech="Redis" style="border-color:#dc382d">🔴 Redis</div>
+      <div class="tech-item" draggable="true" ondragstart="onDragStart(event)" data-tech="GraphQL" style="border-color:#e10098">💜 GraphQL</div>
+      <div class="tech-item" draggable="true" ondragstart="onDragStart(event)" data-tech="AWS" style="border-color:#ff9900">☁️ AWS</div>
+      <div class="tech-item" draggable="true" ondragstart="onDragStart(event)" data-tech="Kubernetes" style="border-color:#326ce5">⚙️ Kubernetes</div>
+      <div class="tech-item" draggable="true" ondragstart="onDragStart(event)" data-tech="Vue.js" style="border-color:#41b883">💚 Vue.js</div>
+    </div>
+
+    <div id="stack-name"></div>
+    <button class="reset-btn" onclick="resetStack()">🔄 Reset Stack</button>
+  </div>
+</section>
+
+<!-- CONCEPT MODAL -->
+<div class="modal-overlay" id="concept-modal" onclick="handleOverlayClick(event)">
+  <div class="modal-box" id="modal-box">
+    <div class="modal-header" id="modal-header">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <span class="modal-big-emoji" id="modal-emoji">🔐</span>
+      <h2 class="modal-title" id="modal-title">Authentication</h2>
+      <p class="modal-subtitle" id="modal-subtitle">The Zoo's Front Gate</p>
+    </div>
+    <div class="modal-body">
+      <div class="modal-illustration" id="modal-illustration"></div>
+      <p class="modal-explain-title" id="modal-explain-title">So... what is it?</p>
+      <p class="modal-explain-text" id="modal-explain-text"></p>
+      <div class="modal-steps" id="modal-steps"></div>
+      <div class="modal-fun-fact" id="modal-fun-fact"></div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>Made with <span>♥</span> and way too many animal emojis 🦁🐢🐶🐟🦆 · <span>TechZoo</span> © 2025</p>
+  <p style="margin-top:0.5rem;font-size:0.8rem">No animals were harmed in the making of this website. All of them got promoted to senior engineer. 🎓</p>
+</footer>
+
+<script>
+// ---- QUIZ LOGIC ----
+const questions = [
+  { emoji: "🐶", text: "Shiba the dog sends requests to the server. What kind of developer is he?", options: ["A) Backend Developer", "B) Frontend Developer", "C) Database Admin", "D) DevOps Engineer"], answer: 1 },
+  { emoji: "🐢", text: "Turbo the turtle 'connects everything' — API, database, logic, auth. What role does he play?", options: ["A) UI Designer", "B) Data Analyst", "C) Backend Developer", "D) QA Tester"], answer: 2 },
+  { emoji: "🐟", text: "Goldie the fish lives in a bowl and only stores data. What is she?", options: ["A) A Cache", "B) A Database", "C) A Load Balancer", "D) An API Gateway"], answer: 1 },
+  { emoji: "🦆", text: "Waddles the duck has 'CI/CD' in his toolkit. What does CI/CD stand for?", options: ["A) Code Iterate / Code Deploy", "B) Continuous Integration / Continuous Delivery", "C) Container Integration / Cloud Deployment", "D) Cool Ideas / Cool Delivery"], answer: 1 },
+  { emoji: "🐦", text: "Router the bird routes incoming requests to the right service. What is this called?", options: ["A) A Database", "B) A Frontend", "C) An API Gateway", "D) A Testing Framework"], answer: 2 },
+  { emoji: "🏗️", text: "Which technology packages your app into a portable 'container' so it works anywhere?", options: ["A) Redis", "B) Kubernetes", "C) Docker", "D) GitHub"], answer: 2 },
+  { emoji: "🔐", text: "JWT, OAuth, and sessions are all used for what concept?", options: ["A) Database indexing", "B) Animation timing", "C) API rate limiting", "D) Authentication"], answer: 3 },
+  { emoji: "⚡", text: "Redis is often used as a ______ to speed up frequently-accessed data.", options: ["A) Framework", "B) Cache", "C) Router", "D) Compiler"], answer: 1 },
+];
+
+let currentQ = 0, score = 0, answered = false;
+const shuffled = [...questions].sort(() => Math.random() - 0.5);
+
+function loadQuestion() {
+  const q = shuffled[currentQ];
+  document.getElementById('question-emoji').textContent = q.emoji;
+  document.getElementById('question-text').textContent = q.text;
+  document.getElementById('quiz-feedback').textContent = '';
+  document.getElementById('next-btn').style.display = 'none';
+  answered = false;
+
+  const container = document.getElementById('options-container');
+  container.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-option';
+    btn.innerHTML = opt;
+    btn.onclick = () => selectAnswer(i, q.answer, btn);
+    container.appendChild(btn);
+  });
+  document.getElementById('total').textContent = shuffled.length;
+}
+
+function selectAnswer(chosen, correct, btn) {
+  if (answered) return;
+  answered = true;
+  const opts = document.querySelectorAll('.quiz-option');
+  opts.forEach(o => o.classList.add('disabled'));
+  if (chosen === correct) {
+    btn.classList.add('correct');
+    score++;
+    document.getElementById('score').textContent = score;
+    document.getElementById('quiz-feedback').textContent = ['🎉 Brilliant!', '🔥 Correct!', '⭐ You got it!', '🦁 Smart move!'][Math.floor(Math.random()*4)];
+    launchConfetti();
+  } else {
+    btn.classList.add('wrong');
+    opts[correct].classList.add('correct');
+    document.getElementById('quiz-feedback').textContent = ['😅 Almost!', '🐢 Try again next time!', '🤔 Close but no cigar!'][Math.floor(Math.random()*3)];
+  }
+  document.getElementById('next-btn').style.display = 'inline-flex';
+}
+
+function nextQuestion() {
+  currentQ++;
+  if (currentQ >= shuffled.length) {
+    document.getElementById('question-box').innerHTML = `
+      <span style="font-size:3rem">🏆</span>
+      <div id="question-text" style="color:#fff;font-family:'Fredoka One',cursive;font-size:1.6rem;margin-top:1rem">
+        You scored ${score} out of ${shuffled.length}!<br>
+        ${score === shuffled.length ? "🎖️ PERFECT SCORE! You're a TechZoo legend!" : score >= shuffled.length*0.7 ? "⭐ Excellent work!" : "🐢 Keep learning — you're on your way!"}
+      </div>`;
+    document.getElementById('options-container').innerHTML = '';
+    document.getElementById('quiz-feedback').textContent = '';
+    document.getElementById('next-btn').textContent = '🔄 Play Again';
+    document.getElementById('next-btn').style.display = 'inline-flex';
+    document.getElementById('next-btn').onclick = () => { currentQ = 0; score = 0; document.getElementById('score').textContent = 0; shuffled.sort(() => Math.random()-0.5); document.getElementById('next-btn').onclick = nextQuestion; document.getElementById('question-box').innerHTML = '<span id="question-emoji">🤔</span><div id="question-text">Loading...</div>'; loadQuestion(); };
+    launchConfetti(); launchConfetti(); launchConfetti();
+  } else { loadQuestion(); }
+}
+loadQuestion();
+
+// ---- CONFETTI ----
+function launchConfetti() {
+  const colors = ['#ffd93d','#ff6b35','#6bcb77','#4d96ff','#c77dff','#ff6b9d'];
+  for (let i = 0; i < 30; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti-piece';
+    c.style.left = Math.random()*100 + 'vw';
+    c.style.background = colors[Math.floor(Math.random()*colors.length)];
+    c.style.animationDuration = (1 + Math.random()*2) + 's';
+    c.style.animationDelay = (Math.random()*0.5) + 's';
+    c.style.transform = `rotate(${Math.random()*360}deg)`;
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 3000);
+  }
+}
+
+// ---- CARD POP ----
+function popCard(el) {
+  el.classList.remove('pop-in');
+  void el.offsetWidth;
+  el.classList.add('pop-in');
+  launchConfetti();
+}
+
+// ---- DRAG & DROP STACK BUILDER ----
+let dragTech = null;
+const stackArea = document.getElementById('stack-area');
+const stackNames = {
+  'React+Node.js+PostgreSQL': '🔥 The Classic PERN Stack',
+  'React+Node.js+MongoDB': '🍃 The Famous MERN Stack',
+  'Vue.js+Python+PostgreSQL': '🐍 The Sophisticated Pythonista',
+  'React+TypeScript': '🔷 Type-Safe Frontend Boss',
+  'Docker+Kubernetes+AWS': '☁️ Cloud Native Warrior',
+};
+
+function onDragStart(e) { dragTech = e.target.dataset.tech; e.dataTransfer.effectAllowed = 'copy'; }
+function onDragOver(e) { e.preventDefault(); stackArea.classList.add('drag-over'); }
+function onDragLeave() { stackArea.classList.remove('drag-over'); }
+function onDrop(e) {
+  e.preventDefault();
+  stackArea.classList.remove('drag-over');
+  if (!dragTech) return;
+  const existing = [...stackArea.querySelectorAll('.tech-item')].map(t => t.dataset.tech);
+  if (existing.includes(dragTech)) return;
+  const el = document.createElement('div');
+  el.className = 'tech-item pop-in';
+  el.dataset.tech = dragTech;
+  el.textContent = [...document.querySelectorAll('#tech-shelf .tech-item')].find(t => t.dataset.tech === dragTech)?.textContent || dragTech;
+  el.onclick = () => { el.remove(); updateStackName(); };
+  el.title = 'Click to remove';
+  // Clear placeholder
+  const placeholder = stackArea.querySelector('span');
+  if (placeholder) placeholder.remove();
+  stackArea.appendChild(el);
+  updateStackName();
+  launchConfetti();
+}
+function updateStackName() {
+  const techs = [...stackArea.querySelectorAll('.tech-item')].map(t => t.dataset.tech).sort().join('+');
+  const name = stackNames[techs] || (stackArea.querySelectorAll('.tech-item').length >= 2 ? '✨ Your Custom Dream Stack!' : '');
+  document.getElementById('stack-name').textContent = name;
+}
+function resetStack() {
+  stackArea.innerHTML = '<span style="color:rgba(0,0,0,0.3);font-weight:700;font-size:0.9rem;align-self:center">Drag techs here! 👇</span>';
+  document.getElementById('stack-name').textContent = '';
+}
+
+// ---- CONCEPT MODAL DATA ----
+const conceptData = {
+  auth: {
+    emoji: '🔐',
+    title: 'Authentication',
+    subtitle: '🎟️ "Are you REALLY who you say you are?"',
+    gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+    explainTitle: '🦁 What is Authentication?',
+    explain: 'Authentication is how a website or app checks your identity — basically, it\'s asking "Who are you?" before letting you inside. Think of it like a bouncer at a VIP party. No ticket? No entry. Wrong password? Goodbye! 👋',
+    steps: [
+      { icon: '1', color: '#f5576c', title: 'You type your username & password', desc: 'You tell the app <strong>"Hey, it\'s me!"</strong> with your credentials.' },
+      { icon: '2', color: '#f093fb', title: 'The app checks its records', desc: 'It searches its database: <strong>"Do we have someone with this username and password?"</strong>' },
+      { icon: '3', color: '#a855f7', title: 'Match found? You\'re in! 🎉', desc: 'The app creates a <strong>session or token</strong> — like a wristband that proves you already checked in.' },
+      { icon: '4', color: '#6366f1', title: 'No match? Rejected! 🚫', desc: 'Wrong credentials mean <strong>access denied</strong>. Try again, or reset your password!' },
+    ],
+    funFactColor: 'linear-gradient(135deg, #ffecd2, #fcb69f)',
+    funFactTextColor: '#5a3e28',
+    funFact: '🐾 Fun Fact: Most apps never store your actual password! They store a scrambled version called a "hash" — so even if hackers break in, they can\'t read your password directly. Smart, right? 🧠',
+    illustration: `<svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:linear-gradient(135deg,#ffecd2,#fcb69f);border-radius:16px">
+      <!-- Zoo gate -->
+      <rect x="230" y="40" width="140" height="150" rx="10" fill="#fff" stroke="#f5576c" stroke-width="3"/>
+      <rect x="255" y="60" width="90" height="110" rx="8" fill="#fce4ec"/>
+      <!-- Door bars -->
+      <line x1="270" y1="60" x2="270" y2="170" stroke="#f5576c" stroke-width="3"/>
+      <line x1="290" y1="60" x2="290" y2="170" stroke="#f5576c" stroke-width="3"/>
+      <line x1="310" y1="60" x2="310" y2="170" stroke="#f5576c" stroke-width="3"/>
+      <line x1="330" y1="60" x2="330" y2="170" stroke="#f5576c" stroke-width="3"/>
+      <!-- Lock -->
+      <rect x="288" y="110" width="24" height="20" rx="4" fill="#f5576c"/>
+      <path d="M293,110 Q300,98 307,110" fill="none" stroke="#f5576c" stroke-width="3"/>
+      <circle cx="300" cy="120" r="3" fill="#fff"/>
+      <!-- Bouncer animal: bear -->
+      <circle cx="130" cy="130" r="35" fill="#8B6914"/>
+      <circle cx="115" cy="110" r="14" fill="#8B6914"/>
+      <circle cx="145" cy="110" r="14" fill="#8B6914"/>
+      <circle cx="130" cy="125" r="28" fill="#c8a96e"/>
+      <circle cx="120" cy="122" r="5" fill="#2d2d2d"/>
+      <circle cx="140" cy="122" r="5" fill="#2d2d2d"/>
+      <ellipse cx="130" cy="133" rx="8" ry="5" fill="#8B6914"/>
+      <!-- Bouncer hat -->
+      <rect x="110" y="88" width="40" height="18" rx="3" fill="#1a1a2e"/>
+      <rect x="106" y="104" width="48" height="5" rx="2" fill="#1a1a2e"/>
+      <!-- Clipboard -->
+      <rect x="155" y="118" width="30" height="38" rx="4" fill="#fff" stroke="#ccc" stroke-width="1.5"/>
+      <line x1="161" y1="130" x2="179" y2="130" stroke="#ccc" stroke-width="1.5"/>
+      <line x1="161" y1="138" x2="179" y2="138" stroke="#ccc" stroke-width="1.5"/>
+      <line x1="161" y1="146" x2="172" y2="146" stroke="#6bcb77" stroke-width="2"/>
+      <!-- User with ticket -->
+      <circle cx="460" cy="120" r="28" fill="#ffd93d"/>
+      <circle cx="450" cy="112" r="6" fill="#2d2d2d"/>
+      <circle cx="470" cy="112" r="6" fill="#2d2d2d"/>
+      <path d="M452,130 Q460,138 468,130" fill="none" stroke="#2d2d2d" stroke-width="2"/>
+      <!-- Ticket -->
+      <rect x="474" y="130" width="44" height="26" rx="6" fill="#f5576c"/>
+      <text x="496" y="148" font-size="11" fill="#fff" font-weight="bold" text-anchor="middle">🎟️</text>
+      <!-- Arrow -->
+      <path d="M410,130 Q385,130 365,130" fill="none" stroke="#f5576c" stroke-width="2.5" stroke-dasharray="6,4" marker-end="url(#arr)"/>
+      <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#f5576c"/></marker></defs>
+      <!-- Label -->
+      <text x="300" y="205" font-size="13" fill="#8B6914" font-weight="bold" text-anchor="middle" font-family="Nunito,sans-serif">🐻 Bruno checks every visitor's ticket!</text>
+    </svg>`
+  },
+  api: {
+    emoji: '🌐',
+    title: 'APIs',
+    subtitle: '🍔 "How apps talk to each other!"',
+    gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+    explainTitle: '🐦 What is an API?',
+    explain: 'API stands for "Application Programming Interface" — but forget that! Just think of it as a waiter at a restaurant. You (the app) don\'t go into the kitchen (the server) yourself. You tell the waiter (the API) what you want, and it brings it back to you. 🍽️',
+    steps: [
+      { icon: '1', color: '#4facfe', title: 'You make a REQUEST', desc: 'Your app says: <strong>"Hey, give me today\'s weather!"</strong> — this is the order you place.' },
+      { icon: '2', color: '#00b4d8', title: 'The API carries your order', desc: 'The API takes your request to the <strong>right server or service</strong>, like a speedy waiter.' },
+      { icon: '3', color: '#0077b6', title: 'The server prepares RESPONSE', desc: 'The server cooks up the answer: <strong>"It\'s 28°C and sunny! ☀️"</strong>' },
+      { icon: '4', color: '#023e8a', title: 'You get your data back!', desc: 'The API delivers the response to your app, which <strong>shows it beautifully</strong> to the user.' },
+    ],
+    funFactColor: 'linear-gradient(135deg, #e0f7fa, #b2ebf2)',
+    funFactTextColor: '#006064',
+    funFact: '🐾 Fun Fact: When you use Google Maps inside another app, that\'s an API at work! Google lets other apps "order" their map data — like borrowing a super smart friend\'s notes. 🗺️',
+    illustration: `<svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:linear-gradient(135deg,#e0f7fa,#b3e5fc);border-radius:16px">
+      <!-- App box left -->
+      <rect x="20" y="60" width="110" height="110" rx="16" fill="#fff" stroke="#4facfe" stroke-width="2.5"/>
+      <rect x="35" y="78" width="80" height="48" rx="8" fill="#e3f2fd"/>
+      <text x="75" y="108" font-size="22" text-anchor="middle">📱</text>
+      <text x="75" y="152" font-size="11" fill="#0077b6" font-weight="bold" text-anchor="middle" font-family="Nunito">Your App</text>
+      <!-- Server box right -->
+      <rect x="470" y="60" width="110" height="110" rx="16" fill="#fff" stroke="#00b4d8" stroke-width="2.5"/>
+      <rect x="485" y="78" width="80" height="48" rx="8" fill="#e0f7fa"/>
+      <text x="525" y="108" font-size="22" text-anchor="middle">🖥️</text>
+      <text x="525" y="152" font-size="11" fill="#006064" font-weight="bold" text-anchor="middle" font-family="Nunito">Server</text>
+      <!-- Waiter bird in middle -->
+      <circle cx="300" cy="95" r="30" fill="#ffd93d"/>
+      <circle cx="289" cy="87" r="6" fill="#2d2d2d"/>
+      <circle cx="311" cy="87" r="6" fill="#2d2d2d"/>
+      <ellipse cx="300" cy="104" rx="12" ry="8" fill="#ff9f43"/>
+      <!-- Wing/bow tie -->
+      <ellipse cx="275" cy="105" rx="12" ry="7" fill="#4facfe" transform="rotate(-20,275,105)"/>
+      <ellipse cx="325" cy="105" rx="12" ry="7" fill="#4facfe" transform="rotate(20,325,105)"/>
+      <!-- Tray -->
+      <ellipse cx="300" cy="140" rx="32" ry="8" fill="#fff" stroke="#ccc" stroke-width="1.5"/>
+      <rect x="268" y="132" width="64" height="8" rx="4" fill="#f0f0f0"/>
+      <text x="300" y="141" font-size="14" text-anchor="middle">📦</text>
+      <!-- Arrows -->
+      <path d="M135,95 L230,115" fill="none" stroke="#4facfe" stroke-width="2.5" marker-end="url(#arr2)"/>
+      <path d="M370,125 L465,105" fill="none" stroke="#00b4d8" stroke-width="2.5" marker-end="url(#arr3)"/>
+      <text x="178" y="96" font-size="10" fill="#0077b6" font-weight="bold" font-family="Nunito">REQUEST</text>
+      <text x="390" y="108" font-size="10" fill="#006064" font-weight="bold" font-family="Nunito">RESPONSE</text>
+      <defs>
+        <marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#4facfe"/></marker>
+        <marker id="arr3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#00b4d8"/></marker>
+      </defs>
+      <text x="300" y="205" font-size="13" fill="#0077b6" font-weight="bold" text-anchor="middle" font-family="Nunito,sans-serif">🐦 Router the waiter-bird delivers your order!</text>
+    </svg>`
+  },
+  cache: {
+    emoji: '🗄️',
+    title: 'Caching',
+    subtitle: '🧠 "Remember it once, answer forever!"',
+    gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+    explainTitle: '🐿️ What is Caching?',
+    explain: 'Caching is like a super-smart squirrel that saves nuts nearby so it doesn\'t have to run to the forest every time it\'s hungry. Instead of asking the database the same question over and over, the app keeps the answer saved somewhere fast and nearby. Speedy! ⚡',
+    steps: [
+      { icon: '1', color: '#43e97b', title: 'First time: Ask the database', desc: 'The app needs data. It <strong>goes all the way</strong> to the database and fetches the answer. A bit slow! 🐢' },
+      { icon: '2', color: '#00b4d8', title: 'Save the answer in cache', desc: 'The app thinks: <strong>"I might need this again soon!"</strong> so it saves the answer in a fast memory store.' },
+      { icon: '3', color: '#38f9d7', title: 'Next time: Cache hit! ⚡', desc: 'Same question again? The app finds the <strong>cached answer instantly</strong> — no database trip needed!' },
+      { icon: '4', color: '#10b981', title: 'Cache expires eventually', desc: 'Old data gets cleared out after a while to make sure <strong>stale info doesn\'t stick around</strong> forever.' },
+    ],
+    funFactColor: 'linear-gradient(135deg, #d1fae5, #a7f3d0)',
+    funFactTextColor: '#065f46',
+    funFact: '🐾 Fun Fact: Redis is one of the most popular caching tools! It\'s so fast it can answer millions of requests per second — like a squirrel with a photographic memory and rocket boots. 🚀',
+    illustration: `<svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:linear-gradient(135deg,#d1fae5,#ccfbf1);border-radius:16px">
+      <!-- Slow database far right -->
+      <ellipse cx="520" cy="90" rx="45" ry="20" fill="#43e97b" opacity="0.7"/>
+      <rect x="475" y="90" width="90" height="55" fill="#43e97b" opacity="0.7"/>
+      <ellipse cx="520" cy="145" rx="45" ry="20" fill="#2ecc71"/>
+      <ellipse cx="520" cy="115" rx="45" ry="20" fill="#2ecc71" opacity="0.8"/>
+      <text x="520" y="122" font-size="10" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Nunito">DATABASE</text>
+      <!-- Slow arrow -->
+      <path d="M380,115 Q430,85 470,100" fill="none" stroke="#43e97b" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arr4)"/>
+      <text x="420" y="85" font-size="10" fill="#065f46" font-weight="bold" font-family="Nunito">slow... 🐢</text>
+      <!-- Cache box in middle -->
+      <rect x="210" y="70" width="140" height="90" rx="14" fill="#fff" stroke="#38f9d7" stroke-width="3"/>
+      <text x="280" y="100" font-size="20" text-anchor="middle">⚡</text>
+      <text x="280" y="120" font-size="10" fill="#065f46" font-weight="bold" text-anchor="middle" font-family="Nunito">CACHE</text>
+      <text x="280" y="134" font-size="9" fill="#10b981" text-anchor="middle" font-family="Nunito">"I already know this!"</text>
+      <!-- Fast arrow from cache to app -->
+      <path d="M210,115 L140,115" fill="none" stroke="#10b981" stroke-width="3" marker-end="url(#arr5)"/>
+      <text x="168" y="107" font-size="10" fill="#065f46" font-weight="bold" font-family="Nunito">fast! ⚡</text>
+      <!-- App squirrel left -->
+      <circle cx="90" cy="115" r="32" fill="#8B6914"/>
+      <circle cx="77" cy="95" r="12" fill="#8B6914"/>
+      <circle cx="103" cy="95" r="12" fill="#8B6914"/>
+      <circle cx="90" cy="110" r="25" fill="#c8a96e"/>
+      <circle cx="82" cy="107" r="4.5" fill="#2d2d2d"/>
+      <circle cx="98" cy="107" r="4.5" fill="#2d2d2d"/>
+      <ellipse cx="90" cy="117" rx="7" ry="4.5" fill="#8B6914"/>
+      <!-- Bushy tail -->
+      <path d="M60,130 Q40,100 60,80 Q80,110 90,130 Z" fill="#c8a96e"/>
+      <text x="90" y="168" font-size="9" fill="#065f46" font-weight="bold" text-anchor="middle" font-family="Nunito">Your App</text>
+      <defs>
+        <marker id="arr4" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#43e97b"/></marker>
+        <marker id="arr5" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#10b981"/></marker>
+      </defs>
+      <text x="300" y="205" font-size="13" fill="#065f46" font-weight="bold" text-anchor="middle" font-family="Nunito,sans-serif">🐿️ Stash it nearby — answer lightning fast!</text>
+    </svg>`
+  },
+  docker: {
+    emoji: '🐳',
+    title: 'Containers (Docker)',
+    subtitle: '📦 "Your app in a magic suitcase!"',
+    gradient: 'linear-gradient(135deg, #2496ed 0%, #085ca6 100%)',
+    explainTitle: '🐢 What are Containers?',
+    explain: 'Imagine you pack your turtle Turbo into a perfect terrarium with everything he needs — food, water, a little hammock. No matter where you take that terrarium, Turbo lives exactly the same way. That\'s Docker! It wraps your app with ALL its dependencies so it runs identically on any computer. 🌍',
+    steps: [
+      { icon: '1', color: '#2496ed', title: 'Write a Dockerfile', desc: 'You create a recipe: <strong>"My app needs Node.js, these libraries, these files..."</strong>' },
+      { icon: '2', color: '#0ea5e9', title: 'Build an Image 📸', desc: 'Docker packs everything into a <strong>snapshot image</strong> — like a perfect frozen copy of your app world.' },
+      { icon: '3', color: '#0077b6', title: 'Run a Container 📦', desc: 'Start the image and it becomes a live <strong>container</strong> — your app running in its cozy, portable home.' },
+      { icon: '4', color: '#085ca6', title: 'Ship it anywhere! 🚢', desc: '<strong>Works on your laptop, works on the server, works in the cloud.</strong> No more "it works on my machine!" 😅' },
+    ],
+    funFactColor: 'linear-gradient(135deg, #dbeafe, #bfdbfe)',
+    funFactTextColor: '#1e3a8a',
+    funFact: '🐾 Fun Fact: Docker\'s logo is a whale carrying containers on its back — just like in real life where shipping containers revolutionized global trade! Docker did the same for software. 🚢',
+    illustration: `<svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:linear-gradient(135deg,#dbeafe,#bae6fd);border-radius:16px">
+      <!-- Water waves -->
+      <path d="M0,170 Q75,155 150,170 Q225,185 300,170 Q375,155 450,170 Q525,185 600,170 L600,220 L0,220 Z" fill="#2496ed" opacity="0.3"/>
+      <path d="M0,185 Q75,170 150,185 Q225,200 300,185 Q375,170 450,185 Q525,200 600,185 L600,220 L0,220 Z" fill="#0ea5e9" opacity="0.4"/>
+      <!-- Big whale -->
+      <ellipse cx="300" cy="155" rx="120" ry="50" fill="#2496ed"/>
+      <circle cx="195" cy="145" r="25" fill="#2496ed"/>
+      <!-- Tail -->
+      <path d="M400,140 Q435,120 440,150 Q435,160 410,160 Z" fill="#085ca6"/>
+      <!-- Whale eye -->
+      <circle cx="210" cy="138" r="6" fill="#fff"/>
+      <circle cx="212" cy="137" r="3" fill="#2d2d2d"/>
+      <!-- Whale smile -->
+      <path d="M220,155 Q235,165 245,155" fill="none" stroke="#fff" stroke-width="2"/>
+      <!-- Blow hole spray -->
+      <path d="M260,105 Q255,80 265,65" fill="none" stroke="#bae6fd" stroke-width="3"/>
+      <path d="M265,65 Q255,50 270,42 Q280,52 268,62" fill="#bae6fd"/>
+      <!-- Containers on whale back -->
+      <rect x="230" y="100" width="38" height="30" rx="5" fill="#ff6b35" stroke="#fff" stroke-width="1.5"/>
+      <text x="249" y="120" font-size="14" text-anchor="middle">📱</text>
+      <rect x="275" y="98" width="38" height="30" rx="5" fill="#6bcb77" stroke="#fff" stroke-width="1.5"/>
+      <text x="294" y="118" font-size="14" text-anchor="middle">🌐</text>
+      <rect x="320" y="100" width="38" height="30" rx="5" fill="#ffd93d" stroke="#fff" stroke-width="1.5"/>
+      <text x="339" y="120" font-size="14" text-anchor="middle">🗄️</text>
+      <!-- Turtle on left -->
+      <ellipse cx="90" cy="145" rx="30" ry="22" fill="#43e97b"/>
+      <circle cx="90" cy="130" r="14" fill="#2ecc71"/>
+      <circle cx="82" cy="126" r="4" fill="#2d2d2d"/>
+      <circle cx="98" cy="126" r="4" fill="#2d2d2d"/>
+      <ellipse cx="90" cy="133" rx="6" ry="4" fill="#6bcb77"/>
+      <!-- Shell pattern -->
+      <ellipse cx="90" cy="145" rx="24" ry="17" fill="#2ecc71" opacity="0.6"/>
+      <text x="90" y="178" font-size="9" fill="#065f46" font-weight="bold" text-anchor="middle" font-family="Nunito">Turbo says: "Same<br/>everywhere!"</text>
+      <text x="300" y="210" font-size="12" fill="#1e3a8a" font-weight="bold" text-anchor="middle" font-family="Nunito,sans-serif">🐳 Docker whale ships your containers safely!</text>
+    </svg>`
+  },
+  lb: {
+    emoji: '⚖️',
+    title: 'Load Balancing',
+    subtitle: '🦒 "No server should work alone!"',
+    gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+    explainTitle: '🦒 What is Load Balancing?',
+    explain: 'Imagine a zoo with only ONE food stand and 10,000 hungry visitors! That stand would collapse. 😱 Load balancing spreads incoming visitors (requests) evenly across multiple food stands (servers) so none of them gets overwhelmed. Everyone gets served quickly and no server burns out! 🎉',
+    steps: [
+      { icon: '1', color: '#fa709a', title: 'Lots of requests arrive at once', desc: '<strong>Thousands of users</strong> try to use your app at the same time — like a stampede at zoo opening! 🦁' },
+      { icon: '2', color: '#f77f00', title: 'Load balancer receives them all', desc: 'It stands at the front like a cheerful traffic cop, saying <strong>"You go here! You go there!"</strong> 🦒' },
+      { icon: '3', color: '#fee140', title: 'Requests are distributed evenly', desc: 'Each server gets a <strong>fair share</strong> of work — no single server drowns while others nap.' },
+      { icon: '4', color: '#e85d04', title: 'Server down? No problem!', desc: 'If one server fails, the load balancer <strong>routes traffic away</strong> from it automatically. Zero drama. ✅' },
+    ],
+    funFactColor: 'linear-gradient(135deg, #fff3cd, #ffe0b2)',
+    funFactTextColor: '#7c4700',
+    funFact: '🐾 Fun Fact: Netflix uses load balancers to handle millions of video streams at once. Without them, your Friday movie night would be a buffering nightmare! 🎬',
+    illustration: `<svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:linear-gradient(135deg,#fff3cd,#fce4ec);border-radius:16px">
+      <!-- Users left side -->
+      <circle cx="40" cy="80" r="18" fill="#fa709a"/>
+      <text x="40" y="86" font-size="16" text-anchor="middle">👤</text>
+      <circle cx="40" cy="130" r="18" fill="#fa709a"/>
+      <text x="40" y="136" font-size="16" text-anchor="middle">👤</text>
+      <circle cx="40" cy="180" r="18" fill="#fa709a"/>
+      <text x="40" y="186" font-size="16" text-anchor="middle">👤</text>
+      <!-- Arrows to LB -->
+      <path d="M60,80 L145,110" fill="none" stroke="#fa709a" stroke-width="2" marker-end="url(#arr6)"/>
+      <path d="M60,130 L145,120" fill="none" stroke="#fa709a" stroke-width="2" marker-end="url(#arr6)"/>
+      <path d="M60,180 L145,135" fill="none" stroke="#fa709a" stroke-width="2" marker-end="url(#arr6)"/>
+      <!-- Load Balancer - giraffe-ish -->
+      <rect x="145" y="85" width="80" height="70" rx="14" fill="#fee140" stroke="#f77f00" stroke-width="3"/>
+      <!-- Giraffe spots -->
+      <circle cx="165" cy="105" r="8" fill="#f77f00" opacity="0.5"/>
+      <circle cx="195" cy="115" r="6" fill="#f77f00" opacity="0.5"/>
+      <circle cx="175" cy="130" r="7" fill="#f77f00" opacity="0.5"/>
+      <text x="185" y="125" font-size="10" fill="#7c4700" font-weight="bold" text-anchor="middle" font-family="Nunito">⚖️ LB</text>
+      <!-- Arrows from LB to servers -->
+      <path d="M225,105 L340,75" fill="none" stroke="#f77f00" stroke-width="2" marker-end="url(#arr7)"/>
+      <path d="M225,120 L340,120" fill="none" stroke="#f77f00" stroke-width="2" marker-end="url(#arr7)"/>
+      <path d="M225,135 L340,165" fill="none" stroke="#f77f00" stroke-width="2" marker-end="url(#arr7)"/>
+      <!-- Servers right -->
+      <rect x="340" y="55" width="70" height="45" rx="10" fill="#fff" stroke="#6bcb77" stroke-width="2"/>
+      <text x="375" y="83" font-size="20" text-anchor="middle">🖥️</text>
+      <text x="375" y="96" font-size="8" fill="#065f46" text-anchor="middle" font-family="Nunito">Server 1 😊</text>
+      <rect x="340" y="100" width="70" height="45" rx="10" fill="#fff" stroke="#6bcb77" stroke-width="2"/>
+      <text x="375" y="128" font-size="20" text-anchor="middle">🖥️</text>
+      <text x="375" y="141" font-size="8" fill="#065f46" text-anchor="middle" font-family="Nunito">Server 2 😊</text>
+      <rect x="340" y="145" width="70" height="45" rx="10" fill="#fff" stroke="#6bcb77" stroke-width="2"/>
+      <text x="375" y="173" font-size="20" text-anchor="middle">🖥️</text>
+      <text x="375" y="186" font-size="8" fill="#065f46" text-anchor="middle" font-family="Nunito">Server 3 😊</text>
+      <defs>
+        <marker id="arr6" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#fa709a"/></marker>
+        <marker id="arr7" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#f77f00"/></marker>
+      </defs>
+      <text x="300" y="213" font-size="12" fill="#7c4700" font-weight="bold" text-anchor="middle" font-family="Nunito,sans-serif">🦒 Everyone gets served — no chaos, just vibes!</text>
+    </svg>`
+  },
+  cicd: {
+    emoji: '🔄',
+    title: 'CI/CD',
+    subtitle: '🏭 "Code → Test → Deploy, automatically!"',
+    gradient: 'linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)',
+    explainTitle: '🦆 What is CI/CD?',
+    explain: 'CI/CD is like a magical conveyor belt for your code! Every time you write new code and save it, the belt automatically picks it up, runs all the tests, checks for bugs, and if everything looks good — ships it to users! No manual steps, no forgotten tests, no sweaty deploy nights at 2am. 😴',
+    steps: [
+      { icon: '1', color: '#a18cd1', title: 'CI: Continuous Integration', desc: 'Every time a developer <strong>pushes code</strong>, automated tests run immediately to catch bugs early.' },
+      { icon: '2', color: '#9b59b6', title: 'Tests pass? Great! ✅', desc: 'All good! The code gets <strong>merged and built</strong> into the latest version of the app automatically.' },
+      { icon: '3', color: '#e056fd', title: 'CD: Continuous Delivery', desc: 'The tested build is <strong>packaged and ready</strong> to be deployed to production whenever you say go!' },
+      { icon: '4', color: '#fd79a8', title: 'CD: Continuous Deployment', desc: '<strong>Fully automatic deployment</strong> — new code goes live for users without any human button-pressing! 🚀' },
+    ],
+    funFactColor: 'linear-gradient(135deg, #f3e5f5, #fce4ec)',
+    funFactTextColor: '#6a1b9a',
+    funFact: '🐾 Fun Fact: Companies like Amazon deploy code thousands of times per day using CI/CD pipelines. That\'s like Waddles the Duck doing 10,000 deliveries before lunch! 🦆',
+    illustration: `<svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:linear-gradient(135deg,#f3e5f5,#fce4ec);border-radius:16px">
+      <!-- Conveyor belt base -->
+      <rect x="30" y="145" width="540" height="20" rx="10" fill="#a18cd1" opacity="0.5"/>
+      <!-- Belt lines -->
+      <line x1="80" y1="145" x2="80" y2="165" stroke="#fff" stroke-width="1.5" opacity="0.5"/>
+      <line x1="160" y1="145" x2="160" y2="165" stroke="#fff" stroke-width="1.5" opacity="0.5"/>
+      <line x1="240" y1="145" x2="240" y2="165" stroke="#fff" stroke-width="1.5" opacity="0.5"/>
+      <line x1="320" y1="145" x2="320" y2="165" stroke="#fff" stroke-width="1.5" opacity="0.5"/>
+      <line x1="400" y1="145" x2="400" y2="165" stroke="#fff" stroke-width="1.5" opacity="0.5"/>
+      <line x1="480" y1="145" x2="480" y2="165" stroke="#fff" stroke-width="1.5" opacity="0.5"/>
+      <!-- Belt wheels -->
+      <circle cx="45" cy="155" r="14" fill="#7c3aed"/>
+      <circle cx="555" cy="155" r="14" fill="#7c3aed"/>
+      <!-- Stage items on belt -->
+      <!-- Stage 1: Code box -->
+      <rect x="50" y="100" width="60" height="42" rx="8" fill="#fff" stroke="#a18cd1" stroke-width="2"/>
+      <text x="80" y="128" font-size="20" text-anchor="middle">💻</text>
+      <text x="80" y="90" font-size="9" fill="#6a1b9a" font-weight="bold" text-anchor="middle" font-family="Nunito">PUSH CODE</text>
+      <!-- Stage 2: Test -->
+      <rect x="170" y="100" width="60" height="42" rx="8" fill="#fff" stroke="#9b59b6" stroke-width="2"/>
+      <text x="200" y="128" font-size="20" text-anchor="middle">🧪</text>
+      <text x="200" y="90" font-size="9" fill="#6a1b9a" font-weight="bold" text-anchor="middle" font-family="Nunito">AUTO TEST</text>
+      <!-- Stage 3: Build -->
+      <rect x="290" y="100" width="60" height="42" rx="8" fill="#fff" stroke="#e056fd" stroke-width="2"/>
+      <text x="320" y="128" font-size="20" text-anchor="middle">🏗️</text>
+      <text x="320" y="90" font-size="9" fill="#6a1b9a" font-weight="bold" text-anchor="middle" font-family="Nunito">BUILD</text>
+      <!-- Stage 4: Deploy -->
+      <rect x="410" y="100" width="60" height="42" rx="8" fill="#fff" stroke="#fd79a8" stroke-width="2"/>
+      <text x="440" y="128" font-size="20" text-anchor="middle">🚀</text>
+      <text x="440" y="90" font-size="9" fill="#6a1b9a" font-weight="bold" text-anchor="middle" font-family="Nunito">DEPLOY!</text>
+      <!-- Check marks between stages -->
+      <text x="140" y="125" font-size="16" text-anchor="middle">✅</text>
+      <text x="260" y="125" font-size="16" text-anchor="middle">✅</text>
+      <text x="380" y="125" font-size="16" text-anchor="middle">✅</text>
+      <!-- Duck mascot -->
+      <circle cx="530" cy="115" r="22" fill="#ffd93d"/>
+      <circle cx="521" cy="107" r="6" fill="#2d2d2d"/>
+      <circle cx="539" cy="107" r="6" fill="#2d2d2d"/>
+      <ellipse cx="530" cy="122" rx="9" ry="6" fill="#ff9f43"/>
+      <!-- Duck wings -->
+      <ellipse cx="510" cy="120" rx="10" ry="5" fill="#f6c90e" transform="rotate(-20,510,120)"/>
+      <ellipse cx="550" cy="120" rx="10" ry="5" fill="#f6c90e" transform="rotate(20,550,120)"/>
+      <text x="530" y="148" font-size="9" fill="#6a1b9a" font-weight="bold" text-anchor="middle" font-family="Nunito">Waddles 🦆</text>
+      <text x="280" y="210" font-size="12" fill="#6a1b9a" font-weight="bold" text-anchor="middle" font-family="Nunito,sans-serif">🏭 Code rolls in → tested → deployed automatically!</text>
+    </svg>`
+  }
+};
+
+function openModal(key) {
+  const d = conceptData[key];
+  if (!d) return;
+  const overlay = document.getElementById('concept-modal');
+  document.getElementById('modal-emoji').textContent = d.emoji;
+  document.getElementById('modal-title').textContent = d.title;
+  document.getElementById('modal-subtitle').textContent = d.subtitle;
+  document.getElementById('modal-header').style.background = d.gradient;
+  document.getElementById('modal-illustration').innerHTML = d.illustration;
+  document.getElementById('modal-explain-title').textContent = d.explainTitle;
+  document.getElementById('modal-explain-text').textContent = d.explain;
+
+  const stepsEl = document.getElementById('modal-steps');
+  stepsEl.innerHTML = d.steps.map(s => `
+    <div class="modal-step" style="border-left-color:${s.color}">
+      <div class="step-num" style="background:${s.color}">${s.icon}</div>
+      <p><strong>${s.title}</strong><br>${s.desc}</p>
+    </div>`).join('');
+
+  document.getElementById('modal-fun-fact').innerHTML = `
+    <div class="fact-icon">🐾</div>
+    <div style="font-size:0.88rem;font-weight:700;color:${d.funFactTextColor};line-height:1.55">${d.funFact}</div>`;
+  document.getElementById('modal-fun-fact').style.background = d.funFactColor;
+
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('concept-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('concept-modal')) closeModal();
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+const revealEls = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+revealEls.forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
