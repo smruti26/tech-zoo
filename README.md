@@ -1,6 +1,6 @@
 # tech-zoo
 Tech-Zoo is a playful website for tech enthusiasts.
-
+URL :: https://smruti26.github.io/tech-zoo/
 # Tech-Zoo 🐾
 
 **Tech-Zoo** is a playful and interactive website designed for tech enthusiasts to explore technology concepts in a fun and engaging way.
